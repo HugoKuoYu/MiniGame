@@ -30,3 +30,8 @@ Thumbs.db
 # Git 本身
 .git/
 .gitignore
+
+
+# Firebase ios/android用 要使用在重新下載sdk
+MiniGame/Assets/Firebase/Plugins/x86_64/*.bundle
+MiniGame/Assets/Firebase/Plugins/x86_64/*.so
