@@ -73,6 +73,8 @@ public class FirebaseManager : MonoBehaviour
     public void LogOut()
     {
         auth.SignOut();
+        print("LogOut!");
+
     }
     private void OnDestroy()
     {

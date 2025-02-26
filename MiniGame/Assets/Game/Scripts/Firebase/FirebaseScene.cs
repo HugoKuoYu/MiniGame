@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainScene : MonoBehaviour
+public class FirebaseScene : MonoBehaviour
 {
     [SerializeField] FirebaseManager firebaseManager;
     // Start is called before the first frame update
