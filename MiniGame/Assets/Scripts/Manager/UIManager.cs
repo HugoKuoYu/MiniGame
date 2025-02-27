@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GraphicRaycaster graphicRaycaster;
 
-    // Update is called once per frame
-    void Update()
-    {
+    [SerializeField] RectTransform safeAreaBaseRectTransform;
+    [SerializeField] RectTransform safeAreaMiddleRectTransform;
+    [SerializeField] RectTransform safeAreaFrontTopRectTransform;
+    [SerializeField] RectTransform FullFrontRectTransform;
+
+
+    protected override void Awake()
+    { 
+        base.Awake();
+
+    }
+    private void SetSafeArea()
+    { 
         
     }
 }
