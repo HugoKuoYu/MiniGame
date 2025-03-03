@@ -1,45 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIBase : MonoBehaviour
+namespace UISystem
 {
-
-    public CanvasGroup canvasGroup;
-    public virtual void Initialize()
-    { 
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
-    public virtual void Hide()
+    public enum UILayerEnum { None, SafeAreaBase, SafeAreaMiddle, SafeAreaTop, FullFront }
+    public class UIBase : MonoBehaviour
     {
-        if (canvasGroup != null)
+        public UILayerEnum uiLayerEnum; //決定UI在哪一個位置
+        public CanvasGroup canvasGroup;
+        public virtual void Initialize()
         {
-            canvasGroup.alpha = 0;//畫布隱形
-            canvasGroup.interactable = false;//不可互動
-            canvasGroup.blocksRaycasts = false;//關閉雷射
+            canvasGroup = GetComponent<CanvasGroup>();
         }
-        else//若畫布為null
-        { 
-            gameObject.SetActive(false);//直接禁用
-        }
-    }
-    public virtual void Show()
-    {
-        if (canvasGroup != null)
+        public virtual void Hide()
         {
-            canvasGroup.alpha = 1;//畫布顯示
-            canvasGroup.interactable = true;//可互動
-            canvasGroup.blocksRaycasts = true;//雷射開啟
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 0;//畫布隱形
+                canvasGroup.interactable = false;//不可互動
+                canvasGroup.blocksRaycasts = false;//關閉雷射
+            }
+            else//若畫布為null
+            {
+                gameObject.SetActive(false);//直接禁用
+            }
         }
-        else//若畫布為null
+        public virtual void Show()
         {
-            gameObject.SetActive(true);//直接顯示物件
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 1;//畫布顯示
+                canvasGroup.interactable = true;//可互動
+                canvasGroup.blocksRaycasts = true;//雷射開啟
+            }
+            else//若畫布為null
+            {
+                gameObject.SetActive(true);//直接顯示物件
+            }
         }
-    }
-    public virtual void Close()
-    {
-        Hide();
-        Destroy(gameObject);
+        public virtual void Close()
+        {
+            Hide();
+            Destroy(gameObject);
+        }
     }
 }

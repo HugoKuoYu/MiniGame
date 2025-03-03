@@ -1007,6 +1007,7 @@ GameObject:
   - component: {fileID: 7804334474645576214}
   - component: {fileID: 1183669740778233529}
   - component: {fileID: 479507896523813388}
+  - component: {fileID: 7869702635761773229}
   m_Layer: 5
   m_Name: UIMainTop
   m_TagString: Untagged
@@ -1073,6 +1074,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5978777774460921178}
   m_CullTransparentMesh: 1
+--- !u!114 &7869702635761773229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5978777774460921178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d04a31b4508d2408402ffe9693bb73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiLayerEnum: 3
+  canvasGroup: {fileID: 0}
 --- !u!1 &6248064278001208290
 GameObject:
   m_ObjectHideFlags: 0
