@@ -550,7 +550,8 @@ MonoBehaviour:
   uiLayerEnum: 4
   canvasGroup: {fileID: 0}
   startButton: {fileID: 3835951145685363374}
-  loadingBarImage: {fileID: 869928121948730997}
+  rotateLoadingImage: {fileID: 6243968538049135819}
+  isloading: 0
 --- !u!1 &8302162087370810699
 GameObject:
   m_ObjectHideFlags: 0
