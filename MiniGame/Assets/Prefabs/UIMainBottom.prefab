@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 1cece9b7f0f99d1409cfd18d55c0a0f6, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -692,7 +692,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &8911338376864605402
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 1cece9b7f0f99d1409cfd18d55c0a0f6, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -784,3 +784,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiLayerEnum: 3
   canvasGroup: {fileID: 0}
+  GrayImageMaterial: {fileID: 2100000, guid: 1cece9b7f0f99d1409cfd18d55c0a0f6, type: 2}
+  EventToggle:
+    Toggle: {fileID: 1010438679767373467}
+    Image: {fileID: 5920871619359720299}
+  ShopToggle:
+    Toggle: {fileID: 966265359387681941}
+    Image: {fileID: 1093024313165696287}
+  GameToggle:
+    Toggle: {fileID: 300097665145030609}
+    Image: {fileID: 2223593266875722240}
+  RankingToggle:
+    Toggle: {fileID: 94080107382589798}
+    Image: {fileID: 6638376030799263789}

@@ -10,7 +10,7 @@ public class UIStart : UIBase
     [SerializeField] Button startButton;
     [SerializeField] Transform rotateLoadingImage;
     [SerializeField] bool isloading = false;
-    private float rotationDuration = 2f;
+    private float rotationDuration = 0.5f;
 
     public override void Initialize()
     {
