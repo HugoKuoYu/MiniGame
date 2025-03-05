@@ -1088,6 +1088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiLayerEnum: 3
   canvasGroup: {fileID: 0}
+  settingButton: {fileID: 5435807093101772082}
 --- !u!1 &6248064278001208290
 GameObject:
   m_ObjectHideFlags: 0

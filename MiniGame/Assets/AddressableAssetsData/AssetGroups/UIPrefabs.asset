@@ -32,13 +32,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67898d9e5352c394eaea12e5fc5eac9b
+    m_Address: ViewShopPage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a9f37787605366d4fa40ffd25517b955
     m_Address: UIStart
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aeb89ba23d0693a478ccc2ca77344d81
+    m_Address: ViewGamePage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cbf066a1021fcd44ba56c3099387b8d5
+    m_Address: ViewEventPage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ce6c246cd2b711a48a307f106bed8b52
     m_Address: UIMainTop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f4ab6c2793d619d44ab621286e2b70f4
+    m_Address: ViewRankingPage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

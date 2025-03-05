@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -39.999977}
+  m_AnchoredPosition: {x: 0, y: 110}
   m_SizeDelta: {x: -120, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &205008928009914107
@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 4414983499072918062}
   - component: {fileID: 286757645822763421}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: SFXToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1106,7 +1106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 109.99999}
+  m_AnchoredPosition: {x: 0, y: -40}
   m_SizeDelta: {x: -120, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6103263372474166107
@@ -1575,7 +1575,7 @@ GameObject:
   - component: {fileID: 4965977956682198115}
   - component: {fileID: 1085386718313968207}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: BGMToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1906,8 +1906,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4487858432657811389}
   - {fileID: 6207210486128419460}
+  - {fileID: 4487858432657811389}
   - {fileID: 9071585580989320207}
   m_Father: {fileID: 7039008295581035016}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2077,6 +2077,7 @@ GameObject:
   - component: {fileID: 3587606763031877748}
   - component: {fileID: 8385816496914705746}
   - component: {fileID: 8568408657368834711}
+  - component: {fileID: 5907641841494818146}
   m_Layer: 5
   m_Name: UISetting
   m_TagString: Untagged
@@ -2145,6 +2146,27 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5907641841494818146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514693350203853838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f13c4ee806d1849899b92aa53a1bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiLayerEnum: 4
+  canvasGroup: {fileID: 0}
+  closeButton: {fileID: 7340899741885781126}
+  restartButton: {fileID: 0}
+  backMenuButton: {fileID: 0}
+  bgmToggle: {fileID: 1085386718313968207}
+  sfxToggle: {fileID: 286757645822763421}
+  bgmOffGameobject: {fileID: 7773183048752720835}
+  sfxOffGameobject: {fileID: 7935080158204666705}
 --- !u!1 &8592306093738235351
 GameObject:
   m_ObjectHideFlags: 0
