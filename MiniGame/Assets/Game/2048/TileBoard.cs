@@ -1,0 +1,132 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Overlays;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class TileBoard : MonoBehaviour
+{
+    public Tile tilePrefab;
+    public TileGrid tileGrid;
+    public TileState[] tilestates;
+    private List<Tile> tiles;
+    private bool isWaiting;
+
+    private void Awake()
+    {
+        tileGrid = GetComponentInChildren<TileGrid>();
+        tiles = new List<Tile>(16);
+    }
+    private void Start()
+    {
+        CreateTile();
+        CreateTile();
+    }
+    private void Update()
+    {
+        if (!isWaiting)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                MovingTile(Vector2Int.up, 0, 1, 1, 1);
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                MovingTile(Vector2Int.down, 0, 1, tileGrid.height - 2, -1);
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+                MovingTile(Vector2Int.left, 1, 1, 0, 1);
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+                MovingTile(Vector2Int.right, tileGrid.width - 2, -1, 0, 1);
+        }
+
+    }
+    private void CreateTile()
+    {
+        Tile tile = Instantiate(tilePrefab,tileGrid.transform);
+        tile.setState(tilestates[0],2);
+        tile.Spawn(tileGrid.GetRandomEmptyCell());
+        tiles.Add(tile);
+    }
+    private void MovingTile(Vector2Int direction,int startX,int incrementX,int startY,int incrementY)
+    {
+        bool changed = false;
+        for (int x = startX; x >=0 &&x < tileGrid.width; x += incrementX)
+            for (int y = startY; y >=0&& y < tileGrid.height; y += incrementY)
+            { 
+                TileCell tileCell = tileGrid.GetCell(x,y);
+                if (tileCell.occupied)
+                {
+                    changed |= MoveTiles(tileCell.tile, direction);
+                }
+            }
+        if(changed)
+        {
+            StartCoroutine(WaitForChanges());
+        }
+    }
+    private bool MoveTiles(Tile tile,Vector2Int direction)
+    {
+        TileCell newCell = null;
+        TileCell adjacementCell = tileGrid.GetAdjacentCell(tile.tilecell,direction);
+        while (adjacementCell != null)
+        {
+            if (adjacementCell.occupied)
+            {
+                //TODO Merging
+                if (CanMerge(tile, adjacementCell.tile))
+                {
+                    Merge(tile, adjacementCell.tile);
+                    return true;
+                }
+
+                break;
+            }
+            newCell = adjacementCell;
+            adjacementCell = tileGrid.GetAdjacentCell(adjacementCell, direction);
+        }
+        if (newCell != null)
+        { 
+            tile.MoveTo(newCell);
+            return true;
+        }
+        return false;
+    }
+    private bool CanMerge(Tile a,Tile b) => a.number == b.number && !b.isLocked;
+    private void Merge(Tile a, Tile b)
+    { 
+        tiles.Remove(a);
+        a.Merge(b.tilecell);
+
+        int index = Mathf.Clamp(IndexOf(b.state) +1 , 0, tilestates.Length - 1);
+        int number = b.number * 2;
+        b.setState(tilestates[index],number);
+    }
+    private int IndexOf(TileState tileState)
+    {
+        for (int i = 0; i < tilestates.Length; i++)
+        {
+            if (tileState == tilestates[i])
+                return i;
+        }
+        return -1;
+    }
+    
+    private IEnumerator WaitForChanges()
+    { 
+        isWaiting = true;
+        yield return new WaitForSeconds(0.1f);
+        isWaiting = false;
+
+        foreach (var tile in tiles)
+        { 
+            tile.isLocked = false;
+        }
+        if (tiles.Count != tileGrid.size)
+            CreateTile();
+        else
+        { 
+            
+        }
+
+    }
+    
+}
