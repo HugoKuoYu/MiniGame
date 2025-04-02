@@ -14,6 +14,9 @@ public class TileBoard : MonoBehaviour
     public TileState[] tilestates;
     private List<Tile> tiles;
     private bool isWaiting;
+    private Vector2 mouseStartPosition;
+    private Vector2 mouseEndPosition;
+    private bool isDragging = false;
 
     private void Awake()
     {
@@ -24,16 +27,58 @@ public class TileBoard : MonoBehaviour
     {
         if (!isWaiting)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-                MovingTile(Vector2Int.up, 0, 1, 1, 1);
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                MovingTile(Vector2Int.down, 0, 1, tileGrid.height - 2, -1);
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-                MovingTile(Vector2Int.left, 1, 1, 0, 1);
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                MovingTile(Vector2Int.right, tileGrid.width - 2, -1, 0, 1);
+            HandleKeyBoardInput();
+            HandleMouseInput();
         }
 
+    }
+    private void HandleKeyBoardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            MovebyDirection(Vector2Int.up);
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            MovebyDirection(Vector2Int.down);
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            MovebyDirection(Vector2Int.left);
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            MovebyDirection(Vector2Int.right);
+    }
+    private void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouseStartPosition = Input.mousePosition;
+            isDragging = true;
+        }
+        if (Input.GetMouseButtonUp(0) && isDragging) 
+        {
+            mouseEndPosition = Input.mousePosition;
+            Vector2 dragVector = mouseEndPosition - mouseStartPosition;
+            Debug.Log($"{mouseEndPosition} - {mouseStartPosition}.magnitude {dragVector.magnitude}");
+            if (dragVector.magnitude < 20f) return;
+            if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
+            {
+                if (dragVector.x > 0) MovebyDirection(Vector2Int.right);
+                else MovebyDirection(Vector2Int.left);
+            }
+            else
+            {
+                if (dragVector.y > 0) MovebyDirection(Vector2Int.up);
+                else MovebyDirection(Vector2Int.down);
+            }
+            isDragging = false;
+        }
+    }
+    private void MovebyDirection(Vector2Int direction)
+    {
+        if (direction == Vector2Int.up)
+            MovingTile(Vector2Int.up, 0, 1, 1, 1);
+        if (direction == Vector2Int.down)
+            MovingTile(Vector2Int.down, 0, 1, tileGrid.height - 2, -1);
+        if(direction == Vector2Int.left)
+            MovingTile(Vector2Int.left, 1, 1, 0, 1);
+        if (direction == Vector2Int.right)
+            MovingTile(Vector2Int.right, tileGrid.width - 2, -1, 0, 1);
     }
     public void CreateTile()
     {
