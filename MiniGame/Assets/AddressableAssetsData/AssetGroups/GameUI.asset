@@ -16,10 +16,13 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: d36c2ebd09006e748935a456294cd977
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: ba75e09a378417644a9311a4a84e1978
+    m_Address: UI_Game2048
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b58dc1312250aa840917c1c78a6df068, type: 2}
   m_SchemaSet:
-    m_Schemas:
-    - {fileID: 11400000, guid: a66e255fe367eb942be7300d8ddbe0bb, type: 2}
-    - {fileID: 11400000, guid: 2b1330792ac9c094996963cb12687a27, type: 2}
+    m_Schemas: []

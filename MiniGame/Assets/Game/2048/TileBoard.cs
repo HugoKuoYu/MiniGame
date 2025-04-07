@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 public class TileBoard : MonoBehaviour
 {
-    public GameManager2048 gameManager2048;
+    public UI_Game2048 gameManager2048;
     public Tile tilePrefab;
     public TileGrid tileGrid;
     public TileState[] tilestates;

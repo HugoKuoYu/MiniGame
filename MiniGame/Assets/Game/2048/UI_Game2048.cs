@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UISystem;
 
-public class GameManager2048 : MonoBehaviour
+public class UI_Game2048 : MonoBehaviour
 {
     // Start is called before the first frame update
     public TileBoard tileBoard;
