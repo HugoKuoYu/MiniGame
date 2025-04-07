@@ -157,5 +157,12 @@ namespace UISystem
                 _ => null
             };
         }
+        public Transform GetSubUITransform<T>(string subObjectName) where T : UIBase
+        { 
+            var ui = GetUI<T>();
+            var target = ui.transform.Find(subObjectName);
+            if (target == null) Debug.Log($"找不到{typeof(T).Name}底下的{subObjectName}");
+            return target;
+        }
     }
 }

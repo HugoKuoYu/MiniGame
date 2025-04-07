@@ -12,7 +12,7 @@ public class UI_Game2048 : MonoBehaviour
     public int score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
-    void Start()
+    public void Init()
     {
         NewGame();
     }

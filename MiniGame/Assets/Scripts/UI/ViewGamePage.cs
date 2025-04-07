@@ -1,19 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UISystem;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ViewGamePage : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button gameButton;
+    public override void Initialize()
     {
-        
+        base.Initialize();
+        gameButton.onClick.AddListener(goToGame);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void goToGame()
     {
-        
+        Debug.Log("goToGame");
+        UIManager.Instance.ShowUI<UIGame>();
     }
 }

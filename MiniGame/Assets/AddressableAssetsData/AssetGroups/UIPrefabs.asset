@@ -27,6 +27,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 522b1851a3bb546499f8dc51c63fd930
+    m_Address: UIGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 578759c592e45f14da823e271a9ed3e5
     m_Address: UIMainBottom
     m_ReadOnly: 0

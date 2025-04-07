@@ -13,6 +13,7 @@ public class UIMain : UIBase
     public override void Initialize()
     {
         base.Initialize();
+        viewGamePage.Initialize();
         UIManager.Instance.ShowUI<UIMainTop>((ui)=>ui.clickSettingButton(() => UIManager.Instance.ShowUI<UISetting>()));
         UIManager.Instance.ShowUI<UIMainBottom>((ui)=>
         {
