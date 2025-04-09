@@ -16,7 +16,12 @@ public class ViewGamePage : UIBase
 
     private void goToGame()
     {
-        Debug.Log("goToGame");
-        UIManager.Instance.ShowUI<UIGame>();
+        UIManager.Instance.ShowUI<UIGame>((ui) =>
+        {
+            UIManager.Instance.GetUI<UIMain>().Hide();
+            UIManager.Instance.GetUI<UIMainBottom>().Hide();
+        });
+        GameManager.Instance.Start2048Game();
+
     }
 }

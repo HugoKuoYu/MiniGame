@@ -10,14 +10,17 @@ public class UIGame : UIBase
         base.Initialize();
     }
     // Start is called before the first frame update
-    public void Start()
+    public override void Show()
     {
-        GameManager.Instance.Start2048Game();
+        base.Show();
+        UISetting.isGamePause = true;
+        Debug.Log("Show UIGame");
+    }
+    public override void Hide()
+    {
+        base.Hide();
+        UISetting.isGamePause = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

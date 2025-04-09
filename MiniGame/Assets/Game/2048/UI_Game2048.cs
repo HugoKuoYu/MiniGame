@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UISystem;
+using UnityEngine.UI;
 
 public class UI_Game2048 : MonoBehaviour
 {
@@ -12,13 +13,19 @@ public class UI_Game2048 : MonoBehaviour
     public int score;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bestScoreText;
+    public Button ClearBestScoreButton;
+    public Button newGameButton;
     public void Init()
     {
         NewGame();
+        ClearBestScoreButton.onClick.AddListener(ClearBestScore);
+        newGameButton.onClick.AddListener(NewGame);
     }
 
     public void NewGame()
     {
+        Debug.Log("NewGame");
+
         SetScore(0);
         bestScoreText.text = LoadBestScore().ToString();
         gameOver.alpha = 0;
@@ -29,7 +36,8 @@ public class UI_Game2048 : MonoBehaviour
         tileBoard.enabled = true;
     }
     public void GameOver()
-    { 
+    {
+        Debug.Log("GameOver");
         tileBoard.enabled = false;
         StartCoroutine(Fade(gameOver, 1f, 0.5f));
         gameOver.interactable = true;
@@ -68,5 +76,9 @@ public class UI_Game2048 : MonoBehaviour
     private int LoadBestScore()
     {
         return PlayerPrefs.GetInt("BestScore", 0);
+    }
+    public void ClearBestScore()
+    {
+        PlayerPrefs.DeleteKey("BestScore");
     }
 }

@@ -114,7 +114,6 @@ namespace UISystem
             var key = typeof(T).Name; //取得T的類別名稱
             if (UIDictionary.ContainsKey(key)) //如果字典中包含此類別
             {
-                Debug.Log($"UIDictionary 包含{key}."); 
                 return UIDictionary[key].Item1 as T; //回傳該名稱的類別
             }
             else //如果字典中沒有包含此類別

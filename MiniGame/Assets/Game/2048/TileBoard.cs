@@ -54,7 +54,6 @@ public class TileBoard : MonoBehaviour
         {
             mouseEndPosition = Input.mousePosition;
             Vector2 dragVector = mouseEndPosition - mouseStartPosition;
-            Debug.Log($"{mouseEndPosition} - {mouseStartPosition}.magnitude {dragVector.magnitude}");
             if (dragVector.magnitude < 20f) return;
             if (Mathf.Abs(dragVector.x) > Mathf.Abs(dragVector.y))
             {
