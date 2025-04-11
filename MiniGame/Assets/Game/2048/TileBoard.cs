@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Overlays;
 using UnityEngine;
-using UnityEngine.AI;
+using undoSystem;
 
 public class TileBoard : MonoBehaviour
 {
@@ -12,12 +12,14 @@ public class TileBoard : MonoBehaviour
     public Tile tilePrefab;
     public TileGrid tileGrid;
     public TileState[] tilestates;
-    private List<Tile> tiles;
+    public List<Tile> tiles;
     private bool isWaiting;
     private Vector2 mouseStartPosition;
     private Vector2 mouseEndPosition;
     private bool isDragging = false;
-    [HideInInspector]public bool isInitialising = false;
+
+    public TileBoardUndoManager undoManager;
+    
 
     private void Awake()
     {
@@ -32,6 +34,10 @@ public class TileBoard : MonoBehaviour
             HandleMouseInput();
         }
 
+    }
+    public void InitUndoSystem()
+    {
+        undoManager = new TileBoardUndoManager(this, gameManager2048);
     }
     private void HandleKeyBoardInput()
     {
@@ -113,7 +119,7 @@ public class TileBoard : MonoBehaviour
             }
         if (changed)
         {
-            SaveSnapShot();
+            undoManager.SaveSnapShot();
         }
         changed = false;
         for (int x = startX; x >= 0 && x < tileGrid.width; x += incrementX)
@@ -219,54 +225,8 @@ public class TileBoard : MonoBehaviour
         }
         return true;
     }
-    public Stack<GameSnapShot>  snapShotStack = new Stack<GameSnapShot>();
-    public void SaveSnapShot() //儲存最後的棋盤狀態
-    {
-        if (isInitialising) return;
-        GameSnapShot snapShot = new GameSnapShot()
-        {
-            score = gameManager2048.score,
-            tilestates = new List<TileSnapShot>()
-        };
-        foreach (var tile in tiles)
-        {
-            Debug.Log(tile.tilecell.coordinates.ToString());
-            snapShot.tilestates.Add(new TileSnapShot
-            {
-                number = tile.number,
-                x = tile.tilecell.coordinates.x,
-                y = tile.tilecell.coordinates.y
-            });
-        }
-        snapShotStack.Push(snapShot);
-    }
-    public void ClearSnapShot()
-    {
-        snapShotStack.Clear();
-    }
-    public void Undo()
-    {
-        if (snapShotStack.Count == 0)
-        {
-            Debug.Log("沒有東西可以還原");
-            return;
-        }
-        
-        GameSnapShot snapShot = snapShotStack.Pop();
-        ClearBoard();
-        foreach (var snap in snapShot.tilestates)
-        {
-            Tile tile = Instantiate(tilePrefab,tileGrid.transform);
-            TileState state = GetTileStateByNumber(snap.number);
-            tile.setState(state, snap.number);
 
-            TileCell tileCell = tileGrid.GetCell(snap.x,snap.y);
-            tile.Spawn(tileCell);
-            tiles.Add(tile);
-        }
-        gameManager2048.SetScoreExternally(snapShot.score);
-    }
-    private TileState GetTileStateByNumber(int number)
+    public TileState GetTileStateByNumber(int number)
     {
         for (int i = 0; i < tilestates.Length; i++)
         { 

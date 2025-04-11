@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UISystem;
 using UnityEngine.UI;
+using undoSystem;
 
 public class UI_Game2048 : MonoBehaviour
 {
@@ -16,19 +17,22 @@ public class UI_Game2048 : MonoBehaviour
     public Button ClearBestScoreButton;
     public Button newGameButton;
     public Button UndoButton;
+    public Button RedoButton;
     public void Init()
     {
+        tileBoard.InitUndoSystem();
         NewGame();
         ClearBestScoreButton.onClick.AddListener(ClearBestScore);
         newGameButton.onClick.AddListener(NewGame);
-        UndoButton.onClick.AddListener(()=>tileBoard.Undo());
+        UndoButton.onClick.AddListener(()=>tileBoard.undoManager.Undo());
+        RedoButton.onClick.AddListener(() => tileBoard.undoManager.Redo());
 
     }
 
     public void NewGame()
     {
         Debug.Log("NewGame");
-        tileBoard.isInitialising = true;
+        tileBoard.undoManager.isInitialising = true;
         SetScore(0);
         bestScoreText.text = LoadBestScore().ToString();
         gameOver.alpha = 0;
@@ -36,8 +40,8 @@ public class UI_Game2048 : MonoBehaviour
         tileBoard.ClearBoard();
         tileBoard.CreateTile();
         tileBoard.CreateTile();
-        tileBoard.isInitialising = false;
-        tileBoard.ClearSnapShot();
+        tileBoard.undoManager.isInitialising = false;
+        tileBoard.undoManager.ClearSnapShots();
 
         tileBoard.enabled = true;
     }
