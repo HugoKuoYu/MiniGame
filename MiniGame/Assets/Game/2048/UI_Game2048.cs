@@ -15,17 +15,20 @@ public class UI_Game2048 : MonoBehaviour
     public TextMeshProUGUI bestScoreText;
     public Button ClearBestScoreButton;
     public Button newGameButton;
+    public Button UndoButton;
     public void Init()
     {
         NewGame();
         ClearBestScoreButton.onClick.AddListener(ClearBestScore);
         newGameButton.onClick.AddListener(NewGame);
+        UndoButton.onClick.AddListener(()=>tileBoard.Undo());
+
     }
 
     public void NewGame()
     {
         Debug.Log("NewGame");
-
+        tileBoard.isInitialising = true;
         SetScore(0);
         bestScoreText.text = LoadBestScore().ToString();
         gameOver.alpha = 0;
@@ -33,6 +36,9 @@ public class UI_Game2048 : MonoBehaviour
         tileBoard.ClearBoard();
         tileBoard.CreateTile();
         tileBoard.CreateTile();
+        tileBoard.isInitialising = false;
+        tileBoard.ClearSnapShot();
+
         tileBoard.enabled = true;
     }
     public void GameOver()
@@ -81,4 +87,10 @@ public class UI_Game2048 : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("BestScore");
     }
+    public void SetScoreExternally(int value) //將分數還原
+    {
+        score = value;
+        scoreText.text = value.ToString();
+    }
+
 }

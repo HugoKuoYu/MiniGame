@@ -17,6 +17,7 @@ public class TileBoard : MonoBehaviour
     private Vector2 mouseStartPosition;
     private Vector2 mouseEndPosition;
     private bool isDragging = false;
+    [HideInInspector]public bool isInitialising = false;
 
     private void Awake()
     {
@@ -98,19 +99,34 @@ public class TileBoard : MonoBehaviour
         }
         tiles.Clear();
     }
-    private void MovingTile(Vector2Int direction,int startX,int incrementX,int startY,int incrementY)
+    private void MovingTile(Vector2Int direction, int startX, int incrementX, int startY, int incrementY)
     {
         bool changed = false;
-        for (int x = startX; x >=0 &&x < tileGrid.width; x += incrementX)
-            for (int y = startY; y >=0&& y < tileGrid.height; y += incrementY)
-            { 
-                TileCell tileCell = tileGrid.GetCell(x,y);
+        for (int x = startX; x >= 0 && x < tileGrid.width; x += incrementX)
+            for (int y = startY; y >= 0 && y < tileGrid.height; y += incrementY)
+            {
+                TileCell tileCell = tileGrid.GetCell(x, y);
+                if (tileCell.occupied)
+                {
+                    changed |= CheckWillChange(tileCell.tile, direction);
+                }
+            }
+        if (changed)
+        {
+            SaveSnapShot();
+        }
+        changed = false;
+        for (int x = startX; x >= 0 && x < tileGrid.width; x += incrementX)
+            for (int y = startY; y >= 0 && y < tileGrid.height; y += incrementY)
+            {
+                TileCell tileCell = tileGrid.GetCell(x, y);
                 if (tileCell.occupied)
                 {
                     changed |= MoveTiles(tileCell.tile, direction);
                 }
             }
-        if(changed)
+
+        if (changed)
         {
             StartCoroutine(WaitForChanges());
         }
@@ -202,5 +218,77 @@ public class TileBoard : MonoBehaviour
                 return false;
         }
         return true;
+    }
+    public GameSnapShot lastSnapShot;
+    public void SaveSnapShot() //儲存最後的棋盤狀態
+    {
+        if (isInitialising) return;
+        lastSnapShot = new GameSnapShot()
+        {
+            score = gameManager2048.score,
+            tilestates = new List<TileSnapShot>()
+        };
+        foreach (var tile in tiles)
+        {
+            Debug.Log(tile.tilecell.coordinates.ToString());
+            lastSnapShot.tilestates.Add(new TileSnapShot
+            {
+                number = tile.number,
+                x = tile.tilecell.coordinates.x,
+                y = tile.tilecell.coordinates.y
+            });
+        }
+    }
+    public void ClearSnapShot()
+    {
+        lastSnapShot = null;
+    }
+    public void Undo()
+    {
+        if (lastSnapShot == null)
+        {
+            Debug.Log("沒有東西可以還原");
+            return;
+        }
+        else
+            ClearBoard();
+        foreach (var snapshot in lastSnapShot.tilestates)
+        {
+            Tile tile = Instantiate(tilePrefab,tileGrid.transform);
+            TileState state = GetTileStateByNumber(snapshot.number);
+            tile.setState(state, snapshot.number);
+
+            TileCell tileCell = tileGrid.GetCell(snapshot.x,snapshot.y);
+            tile.Spawn(tileCell);
+            tiles.Add(tile);
+            Debug.Log("lastSnapShot.score:" + lastSnapShot.score);
+
+        }
+        gameManager2048.SetScoreExternally(lastSnapShot.score);
+    }
+    private TileState GetTileStateByNumber(int number)
+    {
+        for (int i = 0; i < tilestates.Length; i++)
+        { 
+            if(number == Mathf.Pow(2,i+1))
+                return tilestates[i];
+        }
+        return tilestates[tilestates.Length - 1];
+    }
+    private bool CheckWillChange(Tile tile, Vector2Int direction)
+    {
+        TileCell current = tile.tilecell;
+        TileCell adjacement = tileGrid.GetAdjacentCell(current, direction);
+        while (adjacement != null)
+        {
+            if (adjacement.occupied)
+            {
+                if (CanMerge(tile, adjacement.tile))
+                    return true;
+                break;
+            }
+            return true; // 發現空格就會移動
+        }
+        return false;
     }
 }
