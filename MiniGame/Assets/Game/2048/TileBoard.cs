@@ -219,11 +219,11 @@ public class TileBoard : MonoBehaviour
         }
         return true;
     }
-    public GameSnapShot lastSnapShot;
+    public Stack<GameSnapShot>  snapShotStack = new Stack<GameSnapShot>();
     public void SaveSnapShot() //儲存最後的棋盤狀態
     {
         if (isInitialising) return;
-        lastSnapShot = new GameSnapShot()
+        GameSnapShot snapShot = new GameSnapShot()
         {
             score = gameManager2048.score,
             tilestates = new List<TileSnapShot>()
@@ -231,40 +231,40 @@ public class TileBoard : MonoBehaviour
         foreach (var tile in tiles)
         {
             Debug.Log(tile.tilecell.coordinates.ToString());
-            lastSnapShot.tilestates.Add(new TileSnapShot
+            snapShot.tilestates.Add(new TileSnapShot
             {
                 number = tile.number,
                 x = tile.tilecell.coordinates.x,
                 y = tile.tilecell.coordinates.y
             });
         }
+        snapShotStack.Push(snapShot);
     }
     public void ClearSnapShot()
     {
-        lastSnapShot = null;
+        snapShotStack.Clear();
     }
     public void Undo()
     {
-        if (lastSnapShot == null)
+        if (snapShotStack.Count == 0)
         {
             Debug.Log("沒有東西可以還原");
             return;
         }
-        else
-            ClearBoard();
-        foreach (var snapshot in lastSnapShot.tilestates)
+        
+        GameSnapShot snapShot = snapShotStack.Pop();
+        ClearBoard();
+        foreach (var snap in snapShot.tilestates)
         {
             Tile tile = Instantiate(tilePrefab,tileGrid.transform);
-            TileState state = GetTileStateByNumber(snapshot.number);
-            tile.setState(state, snapshot.number);
+            TileState state = GetTileStateByNumber(snap.number);
+            tile.setState(state, snap.number);
 
-            TileCell tileCell = tileGrid.GetCell(snapshot.x,snapshot.y);
+            TileCell tileCell = tileGrid.GetCell(snap.x,snap.y);
             tile.Spawn(tileCell);
             tiles.Add(tile);
-            Debug.Log("lastSnapShot.score:" + lastSnapShot.score);
-
         }
-        gameManager2048.SetScoreExternally(lastSnapShot.score);
+        gameManager2048.SetScoreExternally(snapShot.score);
     }
     private TileState GetTileStateByNumber(int number)
     {
