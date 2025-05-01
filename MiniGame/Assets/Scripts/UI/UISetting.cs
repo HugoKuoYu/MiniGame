@@ -25,10 +25,19 @@ public class UISetting : UIBase
         gameSetting = GameSetting.GetSetting();
         closeButton.onClick.AddListener(() => UIManager.Instance.Hide<UISetting>());
         backMenuButton.onClick.AddListener(backToMenu);
+        restartButton.onClick.AddListener(restartGame);
 
         setUpToggle(bgmToggle, bgmOffGameobject, () => gameSetting.bgmSound, (value) => gameSetting.bgmSound = value);
         setUpToggle(sfxToggle, sfxOffGameobject, () => gameSetting.sfxSound, (value) => gameSetting.sfxSound = value);
     }
+
+    private void restartGame()
+    {
+        GameManager.Instance.Start2048Game();
+        Hide();
+
+    }
+
     public override void Show()
     {
         string a = isGamePause ? "有" : "沒有";
